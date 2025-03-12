@@ -1,7 +1,7 @@
-console.log(` we are in ${process.env.NODE_ENV}`);
+import { todoItem } from "./modules/Logic";
+import { renderDisplay } from "./modules/DOM";
+import './style.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
-const body = document.getElementById('content');
-const title = document.createElement('h1');
-title.innerHTML = `Todo list`;
-body.appendChild(title);
-body.style.backgroundColor = 'green';
+
+console.log(` we are in ${process.env.NODE_ENV}`);

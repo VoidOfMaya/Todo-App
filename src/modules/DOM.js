@@ -1,69 +1,82 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
+//handling colors
+function Green(){return 'linear-gradient(to bottom,rgb(33, 173, 20), #3CB371)'}
+function Lgreen(){return 'linear-gradient(to bottom,rgb(63, 189, 52),rgb(255, 255, 255))'}
+function Yellow(){return 'linear-gradient(to bottom,rgb(243, 158, 0), #FFD700)'}
+function Red(){return 'linear-gradient(to bottom,rgb(255, 0, 0), #FF4500)'}
+function white(){return 'linear-gradient(to left,rgb(255, 255, 255),rgb(233, 233, 233))'}
 
-const renderDisplay = function(){
-    const mainContainer = document.getElementById('content');
-    //global elements
-    const head = document.createElement('div');
-    const body = document.createElement('div');
-    //head elements
+
+//header handler
+function createLogo(){
     const title = document.createElement('h1');
-    const priorityA  = document.createElement('div');
-    const priorityB  = document.createElement('div');
-    const priorityC  = document.createElement('div');
-    // body elements
-    const navArea = document.createElement('div');
-    const navBtn = document.createElement('div');
-    const projectNav = document.createElement('div');
-    const center = document.createElement('div');
-    const top = document.createElement('div');
-    const bottom = document.createElement('div');
-    const right = document.createElement('div');
-    
-    //global container
-    mainContainer.style.height = '100vh';
-    mainContainer.style.display = 'grid';
-    mainContainer.style.gridTemplateRows = '1fr 9fr'; 
-    
-    // logo
     title.innerHTML = 'Todo <i class="fa-solid fa-paperclip"></i>';
     title.style.fontSize= '52px'
     title.style.justifySelf = 'center';
     title.style.alignSelf = 'center';
     title.style.gridArea= 'title'
-    // header design
-    priorityA.style.background = 'linear-gradient(to bottom,rgb(255, 0, 0), #FF4500)';
-    priorityA.style.gridArea = 'A';
+    return title
+}
+function createStripe(){
 
-    priorityB.style.background = 'linear-gradient(to bottom,rgb(243, 158, 0), #FFD700)';
-    priorityB.style.gridArea = 'B';
+    const high  = document.createElement('div');
+    const moderate  = document.createElement('div');
+    const low  = document.createElement('div');
 
-    priorityC.style.background = 'linear-gradient(to bottom,rgb(33, 173, 20), #3CB371)';
-    priorityC.style.gridArea = 'C';
-    //header
+    high.style.background = Red();
+    high.style.gridArea = 'A';
+
+    moderate.style.background = Yellow();
+    moderate.style.gridArea = 'B';
+
+    low.style.background = Green();
+    low.style.gridArea = 'C';
+    return{ high, moderate, low}
+}
+function createHead(){
+    const head = document.createElement('div');
     head.style.display = 'grid';
     head.style.gridTemplateColumns = '37fr 1fr 1fr 1fr';
     head.style.gridTemplateAreas =` 'title A B C'`;
     head.style.boxShadow = '0px 42px 93px 36px rgba(0,0,0,0.19)';
-    //nav button
+    return head
+}
+//side nav handler
+function createNavBtn(){
+    const navBtn = document.createElement('div');
     navBtn.innerHTML = '<i class="fa-solid fa-arrow-right"></i>';
     navBtn.style.padding = '20px 30px';
     navBtn.style.fontSize = '44px';
     navBtn.style.borderRadius = '50px';
-    navBtn.style.background = 'linear-gradient(to left,rgb(255, 255, 255),rgb(233, 233, 233))';
+    navBtn.style.background = white()
     navBtn.style.justifySelf= 'center';
-    
-    //nav list
-    projectNav.style.background = 'linear-gradient(to bottom,rgb(63, 189, 52),rgb(255, 255, 255))';
+    navBtn.style.gridArea = 'nav';
+
+    return navBtn
+}
+function createProjectNav(){
+    const projectNav = document.createElement('div');
+    projectNav.style.background = Lgreen();
     projectNav.style.transtion = 'left 1s ease-in-out';
     projectNav.style.left = '-250px';
     projectNav.style.gridArea = 'myProjects';
-    // nav area
+    return projectNav;
+}
+function createNavArea(){
+    const navArea = document.createElement('div');
     navArea.style.gridArea = 'nav';
     navArea.style.alignContent= 'center';
-    navBtn.addEventListener('mouseover',()=>{
 
-        projectNav.style.left = '0px';
+    navArea.style.gridArea = 'nav';
+    navArea.style.alignContent= 'center';
+
+    return navArea
+}
+function navClickHandler(navButton, container, sidebar){
+    navButton.addEventListener('mouseover',()=>{
+
+        sidebar.style.left = '0px';
         body.style.gridTemplate = '  1fr 9fr 1fr/ 3fr 9fr 1fr';
         body.style.gridTemplateAreas = 
         `"myProjects  top top"
@@ -73,7 +86,7 @@ const renderDisplay = function(){
 
 
     })
-        body.addEventListener('click',()=>{
+    body.addEventListener('click',()=>{
         projectNav.style.left = '-250px';
         body.style.gridTemplate = ' 1fr 9fr 1fr/ 1fr 9fr 1fr';
         body.style.gridTemplateAreas = `"top  top top"
@@ -81,6 +94,63 @@ const renderDisplay = function(){
                                         "bottom  bottom bottom` ;
         navArea.appendChild(navBtn);
     })
+}
+
+const renderDisplay = function(){
+    const mainContainer = document.getElementById('content');
+    //global elements
+    //const head = document.createElement('div');
+    const body = document.createElement('div');
+    const center = document.createElement('div');
+    const top = document.createElement('div');
+    const bottom = document.createElement('div');
+    const right = document.createElement('div');
+    
+    //global container
+    mainContainer.style.height = '100vh';
+    mainContainer.style.display = 'grid';
+    mainContainer.style.gridTemplateRows = '1fr 9fr'; 
+    //TESTING CODE GOES HERE:+++++>
+            //head//
+    const header = createHead();
+    const title = createLogo();
+    const priority = createStripe();
+    
+    header.appendChild(title);
+    header.appendChild(priority.high);
+    header.appendChild(priority.moderate);
+    header.appendChild(priority.low);
+    
+            //nav//
+    const navBtn = createNavBtn();
+    const projectNav = createProjectNav();
+    const navBar = createNavArea();
+    
+    navBar.appendChild(navBtn);
+    body.appendChild(navBar);
+    body.appendChild(projectNav);
+
+    mainContainer.appendChild(header);
+    //navBtn.addEventListener('mouseover',()=>{
+
+        //projectNav.style.left = '0px';
+        //body.style.gridTemplate = '  1fr 9fr 1fr/ 3fr 9fr 1fr';
+        //body.style.gridTemplateAreas = 
+        //`"myProjects  top top"
+        //"myProjects center right"
+        //"myProjects  bottom bottom` 
+        //navArea.removeChild(navBtn);
+
+
+    //})
+        //body.addEventListener('click',()=>{
+        //projectNav.style.left = '-250px';
+        //body.style.gridTemplate = ' 1fr 9fr 1fr/ 1fr 9fr 1fr';
+        //body.style.gridTemplateAreas = `"top  top top"
+        //                                "nav center right"
+        //                                "bottom  bottom bottom` ;
+        //navArea.appendChild(navBtn);
+    //})
 
 
 
@@ -102,18 +172,18 @@ const renderDisplay = function(){
 
 
 
-    head.appendChild(title);
-    head.appendChild(priorityA);
-    head.appendChild(priorityB);
-    head.appendChild(priorityC);
+    //head.appendChild(title);
+    //head.appendChild(priorityA);
+    //head.appendChild(priorityB);
+    //head.appendChild(priorityC);
     
-    navArea.appendChild(navBtn);
-    navArea.appendChild(projectNav);
+    //navArea.appendChild(navBtn);
+    //navArea.appendChild(projectNav);
     
-    body.appendChild(navArea);
-    body.appendChild(projectNav);
+    //body.appendChild(navArea);
+    //body.appendChild(projectNav);
 
-    mainContainer.appendChild(head);
+    body.appendChild(navBar);
     mainContainer.appendChild(body);
 
 }();

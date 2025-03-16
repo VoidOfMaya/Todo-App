@@ -74,26 +74,31 @@ function createNavArea(){
     return navArea
 }
 function navClickHandler(navButton, container, sidebar){
-    navButton.addEventListener('mouseover',()=>{
+    return{
+        openSidebar(){
+            navButton.addEventListener('mouseover', ()=>{
+                container.style.gridTemplate = '  1fr 9fr 1fr/ 3fr 9fr 1fr';
+                container.style.gridTemplateAreas = 
+                `"myProjects  top top"
+                "myProjects center right"
+                "myProjects  bottom bottom` 
+                sidebar.removeChild(navButton);                
+            })
 
-        sidebar.style.left = '0px';
-        body.style.gridTemplate = '  1fr 9fr 1fr/ 3fr 9fr 1fr';
-        body.style.gridTemplateAreas = 
-        `"myProjects  top top"
-        "myProjects center right"
-        "myProjects  bottom bottom` 
-        navArea.removeChild(navBtn);
+        },
 
 
-    })
-    body.addEventListener('click',()=>{
-        projectNav.style.left = '-250px';
-        body.style.gridTemplate = ' 1fr 9fr 1fr/ 1fr 9fr 1fr';
-        body.style.gridTemplateAreas = `"top  top top"
-                                        "nav center right"
-                                        "bottom  bottom bottom` ;
-        navArea.appendChild(navBtn);
-    })
+        closeSidebar(){
+            container.addEventListener('click',()=>{
+                container.style.gridTemplate = ' 1fr 9fr 1fr/ 1fr 9fr 1fr';
+                container.style.gridTemplateAreas = `"top  top top"
+                                                "nav center right"
+                                                "bottom  bottom bottom` ;
+                sidebar.appendChild(navButton);                
+            })
+
+        }
+    }
 }
 
 const renderDisplay = function(){
@@ -125,12 +130,16 @@ const renderDisplay = function(){
     const navBtn = createNavBtn();
     const projectNav = createProjectNav();
     const navBar = createNavArea();
+    const sideNavEvent = navClickHandler( navBtn, body, navBar);
     
     navBar.appendChild(navBtn);
     body.appendChild(navBar);
     body.appendChild(projectNav);
 
     mainContainer.appendChild(header);
+
+    sideNavEvent.openSidebar();
+    sideNavEvent.closeSidebar();
     //navBtn.addEventListener('mouseover',()=>{
 
         //projectNav.style.left = '0px';

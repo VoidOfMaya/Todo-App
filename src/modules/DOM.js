@@ -100,21 +100,36 @@ function navClickHandler(navButton, container, sidebar){
         }
     }
 }
+function createBody(){
+    const body = document.createElement('div');
+    body.style .display = 'grid';
+    body.style.gridTemplate = ' 1fr 9fr 1fr/ 1fr 9fr 1fr';
+    body.style.gridTemplateAreas = `"top  top top"
+                                    "nav center right"
+                                    "bottom  bottom bottom` 
+    return body
+}
+function setContainer(){
+    const mainContainer = document.getElementById('content');
+    mainContainer.style.height = '100vh';
+    mainContainer.style.display = 'grid';
+    mainContainer.style.gridTemplateRows = '1fr 9fr';  
+    return mainContainer;
+}
 
 const renderDisplay = function(){
-    const mainContainer = document.getElementById('content');
+    const mainContainer = setContainer();
+    
+    
     //global elements
     //const head = document.createElement('div');
-    const body = document.createElement('div');
+    const body = createBody();
     const center = document.createElement('div');
     const top = document.createElement('div');
     const bottom = document.createElement('div');
     const right = document.createElement('div');
     
-    //global container
-    mainContainer.style.height = '100vh';
-    mainContainer.style.display = 'grid';
-    mainContainer.style.gridTemplateRows = '1fr 9fr'; 
+
     //TESTING CODE GOES HERE:+++++>
             //head//
     const header = createHead();
@@ -140,57 +155,12 @@ const renderDisplay = function(){
 
     sideNavEvent.openSidebar();
     sideNavEvent.closeSidebar();
-    //navBtn.addEventListener('mouseover',()=>{
-
-        //projectNav.style.left = '0px';
-        //body.style.gridTemplate = '  1fr 9fr 1fr/ 3fr 9fr 1fr';
-        //body.style.gridTemplateAreas = 
-        //`"myProjects  top top"
-        //"myProjects center right"
-        //"myProjects  bottom bottom` 
-        //navArea.removeChild(navBtn);
-
-
-    //})
-        //body.addEventListener('click',()=>{
-        //projectNav.style.left = '-250px';
-        //body.style.gridTemplate = ' 1fr 9fr 1fr/ 1fr 9fr 1fr';
-        //body.style.gridTemplateAreas = `"top  top top"
-        //                                "nav center right"
-        //                                "bottom  bottom bottom` ;
-        //navArea.appendChild(navBtn);
-    //})
-
-
-
-    
 
     //place holder divs
     center.style.gridArea = 'center';
     top.style.gridArea = 'top';
     bottom.style.gridArea = 'bottom';
     right.style.gridArea = 'right';
-
-    //body
-    body.style .display = 'grid';
-    body.style.gridTemplate = ' 1fr 9fr 1fr/ 1fr 9fr 1fr';
-    body.style.gridTemplateAreas = `"top  top top"
-                                    "nav center right"
-                                    "bottom  bottom bottom` 
-    
-
-
-
-    //head.appendChild(title);
-    //head.appendChild(priorityA);
-    //head.appendChild(priorityB);
-    //head.appendChild(priorityC);
-    
-    //navArea.appendChild(navBtn);
-    //navArea.appendChild(projectNav);
-    
-    //body.appendChild(navArea);
-    //body.appendChild(projectNav);
 
     body.appendChild(navBar);
     mainContainer.appendChild(body);

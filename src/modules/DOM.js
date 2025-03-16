@@ -7,7 +7,6 @@ function Yellow(){return 'linear-gradient(to bottom,rgb(243, 158, 0), #FFD700)'}
 function Red(){return 'linear-gradient(to bottom,rgb(255, 0, 0), #FF4500)'}
 function white(){return 'linear-gradient(to left,rgb(255, 255, 255),rgb(233, 233, 233))'}
 
-
 //header handler
 function createLogo(){
     const title = document.createElement('h1');
@@ -44,8 +43,9 @@ function createHead(){
 }
 //side nav handler
 function createNavBtn(){
-    const navBtn = document.createElement('div');
+    const navBtn = document.createElement('button');
     navBtn.innerHTML = '<i class="fa-solid fa-arrow-right"></i>';
+    navBtn.style.border = 'none';
     navBtn.style.padding = '20px 30px';
     navBtn.style.fontSize = '44px';
     navBtn.style.borderRadius = '50px';
@@ -116,52 +116,41 @@ function setContainer(){
     mainContainer.style.gridTemplateRows = '1fr 9fr';  
     return mainContainer;
 }
-
+//required body grid sorting functiom
+function sortGrid(){
+    //code goes
+}
 const renderDisplay = function(){
-    const mainContainer = setContainer();
-    
-    
-    //global elements
-    //const head = document.createElement('div');
-    const body = createBody();
-    const center = document.createElement('div');
-    const top = document.createElement('div');
-    const bottom = document.createElement('div');
-    const right = document.createElement('div');
-    
 
-    //TESTING CODE GOES HERE:+++++>
-            //head//
+    const mainContainer = setContainer();
+    const body = createBody();
+
+    //intialize head//
     const header = createHead();
     const title = createLogo();
     const priority = createStripe();
     
+    //  asymble header
     header.appendChild(title);
     header.appendChild(priority.high);
     header.appendChild(priority.moderate);
     header.appendChild(priority.low);
     
-            //nav//
+    //intialize side nav//
     const navBtn = createNavBtn();
     const projectNav = createProjectNav();
     const navBar = createNavArea();
     const sideNavEvent = navClickHandler( navBtn, body, navBar);
     
+    // sidenav trigger event
+    sideNavEvent.openSidebar();
+    sideNavEvent.closeSidebar();
+    
+    // element main body container 
+    mainContainer.appendChild(header);
     navBar.appendChild(navBtn);
     body.appendChild(navBar);
     body.appendChild(projectNav);
-
-    mainContainer.appendChild(header);
-
-    sideNavEvent.openSidebar();
-    sideNavEvent.closeSidebar();
-
-    //place holder divs
-    center.style.gridArea = 'center';
-    top.style.gridArea = 'top';
-    bottom.style.gridArea = 'bottom';
-    right.style.gridArea = 'right';
-
     body.appendChild(navBar);
     mainContainer.appendChild(body);
 

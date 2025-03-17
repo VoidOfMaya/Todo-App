@@ -1,5 +1,6 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Green,Lgreen,Yellow,Red,white } from './Color';
+import { projectsList } from './projects';
 
 //header handler
 function createLogo(){
@@ -51,11 +52,19 @@ function createNavBtn(){
 }
 function createProjectNav(){
     const projectNav = document.createElement('div');
+    const navTitle = document.createElement('h2');
+
+    navTitle.innerHTML = `<i class="fa-solid fa-folder fa-beat" style="color:#ffff;"></i> My Projects`;
+    navTitle.style.color = '#ffff';
+    navTitle.style.justifySelf = 'center';
+
     projectNav.style.background = Lgreen();
     projectNav.style.transtion = 'left 1s ease-in-out';
     projectNav.style.left = '-250px';
     projectNav.style.gridArea = 'myProjects';
-    return projectNav;
+    //projectNav.style.display = 'grid';
+    //projectNav.style.gridTemplateRows = `1fr repeat(${projectsList.length} * 1fr)`;
+    return {projectNav, navTitle};
 }
 function createNavArea(){
     const navArea = document.createElement('div');
@@ -67,7 +76,7 @@ function createNavArea(){
 
     return navArea
 }
-function navClickHandler(navButton, container, sidebar){
+function navClickHandler(navButton, container, sidebar, mainSideNav){
     return{
         openSidebar(){
             navButton.addEventListener('mouseover', ()=>{
@@ -76,8 +85,10 @@ function navClickHandler(navButton, container, sidebar){
                 `"myProjects  top top"
                 "myProjects center right"
                 "myProjects  bottom bottom` 
-                sidebar.removeChild(navButton);                
+                sidebar.removeChild(navButton);
+                mainSideNav.projectNav.appendChild(mainSideNav.navTitle);                
             })
+
 
         },
 
@@ -88,7 +99,8 @@ function navClickHandler(navButton, container, sidebar){
                 container.style.gridTemplateAreas = `"top  top top"
                                                 "nav center right"
                                                 "bottom  bottom bottom` ;
-                sidebar.appendChild(navButton);                
+                sidebar.appendChild(navButton);
+                mainSideNav.projectNav.removeChild(mainSideNav.navTitle);                  
             })
 
         }
@@ -134,7 +146,7 @@ const renderDisplay = function(){
     const navBtn = createNavBtn();
     const projectNav = createProjectNav();
     const navBar = createNavArea();
-    const sideNavEvent = navClickHandler( navBtn, body, navBar);
+    const sideNavEvent = navClickHandler( navBtn, body, navBar, projectNav);
     
     // sidenav trigger event
     sideNavEvent.openSidebar();
@@ -144,7 +156,7 @@ const renderDisplay = function(){
     mainContainer.appendChild(header);
     navBar.appendChild(navBtn);
     body.appendChild(navBar);
-    body.appendChild(projectNav);
+    body.appendChild(projectNav.projectNav);
     body.appendChild(navBar);
     mainContainer.appendChild(body);
 

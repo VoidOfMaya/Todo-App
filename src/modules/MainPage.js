@@ -1,6 +1,6 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Green,Lgreen,Yellow,Red,white } from './Color';
-import { projectsList } from './projects';
+//import { projectsList } from './projects';
 
 //header handler
 function createLogo(){
@@ -53,8 +53,13 @@ function createNavBtn(){
 function createProjectNav(){
     const projectNav = document.createElement('div');
     const navTitle = document.createElement('h2');
+    const addProject = document.createElement('div');
 
-    navTitle.innerHTML = `<i class="fa-solid fa-folder fa-beat" style="color:#ffff;"></i> My Projects`;
+    addProject.innerHTML = '<i class="fa-solid fa-plus"></i>'
+    addProject.style.gridArea = 'add-project'
+
+    navTitle.style.display = 'inline';
+    navTitle.innerHTML = `<i class="fa-solid fa-folder fa-fade" style="color:#ffff;"></i> My Projects`;
     navTitle.style.color = '#ffff';
     navTitle.style.justifySelf = 'center';
 
@@ -62,9 +67,33 @@ function createProjectNav(){
     projectNav.style.transtion = 'left 1s ease-in-out';
     projectNav.style.left = '-250px';
     projectNav.style.gridArea = 'myProjects';
-    //projectNav.style.display = 'grid';
-    //projectNav.style.gridTemplateRows = `1fr repeat(${projectsList.length} * 1fr)`;
-    return {projectNav, navTitle};
+    projectNav.style.display = 'grid';
+    projectNav.style.gridTemplateRows = `auto`;
+
+    navTitle.addEventListener('mouseover',()=>{
+        navTitle.innerHTML = '';
+        navTitle.innerHTML = `<i class="fa-solid fa-plus fa-beat-fade" style="color:#ffff;"></i> My Projects`;}
+    )
+    navTitle.addEventListener('mouseout',()=>{
+        navTitle.innerHTML = '';
+        navTitle.innerHTML = `<i class="fa-solid fa-folder fa-fade" style="color:#ffff;"></i> My Projects`;}
+    )
+ 
+    return {
+        projectNav,
+        populateSideNav(){
+            navTitle.appendChild(addProject);
+            projectNav.appendChild(navTitle);
+
+        },
+        clearSideNav(){
+            if (projectNav.contains(navTitle)){
+                //navTitle.removeChild(addProject);
+                projectNav.removeChild(navTitle);    
+            }
+            
+        }
+    };
 }
 function createNavArea(){
     const navArea = document.createElement('div');
@@ -86,7 +115,7 @@ function navClickHandler(navButton, container, sidebar, mainSideNav){
                 "myProjects center right"
                 "myProjects  bottom bottom` 
                 sidebar.removeChild(navButton);
-                mainSideNav.projectNav.appendChild(mainSideNav.navTitle);                
+                mainSideNav.populateSideNav()              
             })
 
 
@@ -100,7 +129,7 @@ function navClickHandler(navButton, container, sidebar, mainSideNav){
                                                 "nav center right"
                                                 "bottom  bottom bottom` ;
                 sidebar.appendChild(navButton);
-                mainSideNav.projectNav.removeChild(mainSideNav.navTitle);                  
+                mainSideNav.clearSideNav();               
             })
 
         }

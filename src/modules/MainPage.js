@@ -36,26 +36,12 @@ function createHead(){
     head.style.boxShadow = '0px 42px 93px 36px rgba(0,0,0,0.19)';
     return head
 }
-//side nav handler
-function createNavBtn(){
-    const navBtn = document.createElement('button');
-    navBtn.innerHTML = '<i class="fa-solid fa-arrow-right"></i>';
-    navBtn.style.border = 'none';
-    navBtn.style.padding = '20px 30px';
-    navBtn.style.fontSize = '44px';
-    navBtn.style.borderRadius = '50px';
-    navBtn.style.background = white()
-    navBtn.style.justifySelf= 'center';
-    navBtn.style.gridArea = 'nav';
 
-    return navBtn
-}
 function createProjectNav(){
     const projectNav = document.createElement('div');
     const navTitle = document.createElement('h2');
     const addProject = document.createElement('div');
 
-    addProject.innerHTML = '<i class="fa-solid fa-plus"></i>'
     addProject.style.gridArea = 'add-project'
 
     navTitle.style.display = 'inline';
@@ -85,13 +71,6 @@ function createProjectNav(){
             navTitle.appendChild(addProject);
             projectNav.appendChild(navTitle);
 
-        },
-        clearSideNav(){
-            if (projectNav.contains(navTitle)){
-                //navTitle.removeChild(addProject);
-                projectNav.removeChild(navTitle);    
-            }
-            
         }
     };
 }
@@ -99,49 +78,19 @@ function createNavArea(){
     const navArea = document.createElement('div');
     navArea.style.gridArea = 'nav';
     navArea.style.alignContent= 'center';
-
     navArea.style.gridArea = 'nav';
     navArea.style.alignContent= 'center';
 
     return navArea
 }
-function navClickHandler(navButton, container, sidebar, mainSideNav){
-    return{
-        openSidebar(){
-            navButton.addEventListener('mouseover', ()=>{
-                container.style.gridTemplate = '  1fr 9fr 1fr/ 3fr 9fr 1fr';
-                container.style.gridTemplateAreas = 
-                `"myProjects  top top"
-                "myProjects center right"
-                "myProjects  bottom bottom` 
-                sidebar.removeChild(navButton);
-                mainSideNav.populateSideNav()              
-            })
 
-
-        },
-
-
-        closeSidebar(){
-            container.addEventListener('click',()=>{
-                container.style.gridTemplate = ' 1fr 9fr 1fr/ 1fr 9fr 1fr';
-                container.style.gridTemplateAreas = `"top  top top"
-                                                "nav center right"
-                                                "bottom  bottom bottom` ;
-                sidebar.appendChild(navButton);
-                mainSideNav.clearSideNav();               
-            })
-
-        }
-    }
-}
 function createBody(){
     const body = document.createElement('div');
     body.style .display = 'grid';
-    body.style.gridTemplate = ' 1fr 9fr 1fr/ 1fr 9fr 1fr';
-    body.style.gridTemplateAreas = `"top  top top"
-                                    "nav center right"
-                                    "bottom  bottom bottom` 
+    body.style.gridTemplate = ' 1fr 9fr 1fr/ 2fr 9fr 1fr';
+    body.style.gridTemplateAreas = `"myProjects  main-content main-content"
+                                    "myProjects main-content main-content"
+                                    "myProjects  main-content main-content` 
     return body
 }
 function setContainer(){
@@ -150,6 +99,13 @@ function setContainer(){
     mainContainer.style.display = 'grid';
     mainContainer.style.gridTemplateRows = '1fr 9fr';  
     return mainContainer;
+}
+// main content display
+function createContentDisplay(){
+    const contentDisplay = document.createElement('div');
+    contentDisplay.id = 'main-Content';
+    contentDisplay.style.gridArea = 'main-content';
+    return contentDisplay;
 }
 //required body grid sorting functiom
 function sortGrid(){
@@ -172,21 +128,21 @@ const renderDisplay = function(){
     header.appendChild(priority.low);
     
     //intialize side nav//
-    const navBtn = createNavBtn();
+ 
     const projectNav = createProjectNav();
     const navBar = createNavArea();
-    const sideNavEvent = navClickHandler( navBtn, body, navBar, projectNav);
-    
-    // sidenav trigger event
-    sideNavEvent.openSidebar();
-    sideNavEvent.closeSidebar();
+    projectNav.populateSideNav();
+
+    //main content display
+    const contentWin = createContentDisplay();
     
     // element main body container 
     mainContainer.appendChild(header);
-    navBar.appendChild(navBtn);
+   // navBar.appendChild(navBtn);
     body.appendChild(navBar);
     body.appendChild(projectNav.projectNav);
     body.appendChild(navBar);
+    body.appendChild(contentWin);
     mainContainer.appendChild(body);
 
     return{

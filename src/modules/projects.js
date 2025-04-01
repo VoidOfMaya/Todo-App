@@ -1,6 +1,6 @@
-import { renderDisplay } from "./MainPage";
+import{todoItem} from "./todoItem.js"
 
-
+const projectsList = [];
 
 class project{
     #todoList = [];
@@ -17,6 +17,19 @@ class project{
     viewTodoList(){
         console.log(this.#todoList);
     }
+    newProject(name, des){
+        const newProj = new project(name, des);
+        projectsList.push(newProj);
+        localStorage.setItem(newProj.name, JSON.stringify(newProj))
+    }
+    removeProject(project){
+        projectsList.splice(project,1);
+    }
+
 }
 
-export{project,}
+export{
+    projectsList,
+    project,
+        
+}

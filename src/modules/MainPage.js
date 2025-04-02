@@ -37,16 +37,17 @@ function createHead(){
     return head
 }
 
-function createProjectNav(){
+function createProjectNav(body){
     const projectNav = document.createElement('div');
     const navTitle = document.createElement('h2');
     const addProject = document.createElement('div');
+    const proj = createProj();
 
     addProject.style.gridArea = 'add-project'
 
     navTitle.style.display = 'inline';
-    navTitle.innerHTML = `<i class="fa-solid fa-folder fa-fade" style="color:#ffff;"></i> My Projects`;
-    navTitle.style.color = '#ffff';
+    navTitle.innerHTML = `<div id="new-project"><i class="fa-solid fa-folder fa-fade" style="color:#ffff;"></i> My Projects</div>`;
+    navTitle.style.color = '#969696';
     navTitle.style.justifySelf = 'center';
 
     projectNav.style.background = Lgreen();
@@ -64,6 +65,10 @@ function createProjectNav(){
         navTitle.innerHTML = '';
         navTitle.innerHTML = `<i class="fa-solid fa-folder fa-fade" style="color:#ffff;"></i> My Projects`;}
     )
+    navTitle.addEventListener('click', ()=>{
+        body.appendChild(proj);
+        proj.showModal();
+    })
  
     return {
         projectNav,
@@ -73,6 +78,38 @@ function createProjectNav(){
 
         }
     };
+   
+}
+function createProj(){
+    console.log(`project being created`);
+    const newProj = document.createElement('dialog');
+    const formBody = document.createElement('form');
+    const projNameL = document.createElement('lable');
+    const projNameI = document.createElement(`input`);
+    projNameI.placeholder = 'New Project Name'
+
+    const projInfoL = document.createElement('lable');
+    const projInfoI = document.createElement(`input`);
+    projInfoI.placeholder = 'Project discreption';
+
+    const submitBtn = document.createElement('button');
+    submitBtn.innerHTML = 'create Project';
+
+    formBody.method = 'post';
+    
+    const title = document.createElement('div');
+    title.innerHTML= '<h3>new project</h3>';
+    
+    formBody.appendChild(title);
+    formBody.appendChild(projNameL);
+    formBody.appendChild(projNameI);
+    formBody.appendChild(projInfoL);
+    formBody.appendChild(projInfoI);
+    formBody.appendChild(submitBtn);
+    
+    newProj.appendChild(formBody); 
+
+    return newProj;
 }
 function createNavArea(){
     const navArea = document.createElement('div');
@@ -111,6 +148,7 @@ function createContentDisplay(){
 function sortGrid(){
     //code goes
 }
+//display
 const renderDisplay = function(){
 
     const mainContainer = setContainer();
@@ -129,7 +167,7 @@ const renderDisplay = function(){
     
     //intialize side nav//
  
-    const projectNav = createProjectNav();
+    const projectNav = createProjectNav(body);
     const navBar = createNavArea();
     projectNav.populateSideNav();
 

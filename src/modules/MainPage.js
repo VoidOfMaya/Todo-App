@@ -1,5 +1,6 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { Green,Lgreen,Yellow,Red,white } from './Color';
+import { Green,Lgreen,Yellow,Red,white, whiteTop } from './Color';
+
 //import { projectsList } from './projects';
 
 //header handler
@@ -84,26 +85,48 @@ function createProj(){
     console.log(`project being created`);
     const newProj = document.createElement('dialog');
     const formBody = document.createElement('form');
-    const projNameL = document.createElement('lable');
+
     const projNameI = document.createElement(`input`);
     projNameI.placeholder = 'New Project Name'
 
-    const projInfoL = document.createElement('lable');
+  
     const projInfoI = document.createElement(`input`);
     projInfoI.placeholder = 'Project discreption';
 
     const submitBtn = document.createElement('button');
     submitBtn.innerHTML = 'create Project';
+    submitBtn.style.borderRadius = '0px 0px 25px 25px';
+    submitBtn.style.border = 'none';
+
+    newProj.style.border = 'none';
+    newProj.style.borderRadius = '25px'
+    newProj.style.height = '25vh';
+    newProj.style.width = '50vw';
+    newProj.style.padding = '10px';
 
     formBody.method = 'post';
+    formBody.style.display = 'grid';
+    formBody.style.gridTemplateRows = '1fr 2fr 1fr';
+    formBody.style.height ='100%';
+
+    projNameI.style.border = 'none';
+    projNameI.style.borderRadius = '25px 25px 0px 0px';
+    projNameI.style.backgroundColor = `${whiteTop}`;
+    projNameI.addEventListener('focus', ()=>{
+        projNameI.style.border = 'none';
+        projNameI.style.borderBottom = 'solid';
+    });
+    projNameI.addEventListener('mouseover', ()=>{
+        projNameI.style.backgroundColor = `${white}`;
+    });
+    projNameI.addEventListener('mouseout', ()=>{
+        projNameI.style.backgroundColor = `${whiteTop}`;
+    });
+
+    projInfoI.style.border = 'none';
     
-    const title = document.createElement('div');
-    title.innerHTML= '<h3>new project</h3>';
     
-    formBody.appendChild(title);
-    formBody.appendChild(projNameL);
     formBody.appendChild(projNameI);
-    formBody.appendChild(projInfoL);
     formBody.appendChild(projInfoI);
     formBody.appendChild(submitBtn);
     

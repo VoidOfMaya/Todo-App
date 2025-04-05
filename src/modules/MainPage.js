@@ -1,6 +1,7 @@
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Green,Lgreen,Yellow,Red,white, whiteTop } from './Color';
 
+
 //import { projectsList } from './projects';
 
 //header handler
@@ -87,7 +88,7 @@ function createProj(){
     const formBody = document.createElement('form');
 
     const projNameI = document.createElement(`input`);
-    projNameI.placeholder = 'New Project Name'
+    projNameI.placeholder = 'Project Name'
 
   
     const projInfoI = document.createElement(`input`);
@@ -110,20 +111,36 @@ function createProj(){
     formBody.style.height ='100%';
 
     projNameI.style.border = 'none';
+    projNameI.style.outline = 'none';
     projNameI.style.borderRadius = '25px 25px 0px 0px';
-    projNameI.style.backgroundColor = `${whiteTop}`;
-    projNameI.addEventListener('focus', ()=>{
+
+    projNameI.addEventListener('click', ()=>{
         projNameI.style.border = 'none';
-        projNameI.style.borderBottom = 'solid';
     });
+    
     projNameI.addEventListener('mouseover', ()=>{
-        projNameI.style.backgroundColor = `${white}`;
+        projNameI.style.backgroundColor = `rgb(230, 230, 230)`;
     });
     projNameI.addEventListener('mouseout', ()=>{
-        projNameI.style.backgroundColor = `${whiteTop}`;
+        projNameI.style.backgroundColor = `white`;
     });
 
     projInfoI.style.border = 'none';
+    projInfoI.style.outline = 'none';
+
+    projInfoI.addEventListener('mouseover', ()=>{
+        projInfoI.style.backgroundColor = `rgb(230, 230, 230)`;
+    });
+    projInfoI.addEventListener('mouseout', ()=>{
+        projInfoI.style.backgroundColor = `white`;
+    });
+
+    submitBtn.addEventListener('mouseover',()=>{
+        submitBtn.style.backgroundColor = 'rgb(175, 175, 175)';
+    })
+    submitBtn.addEventListener('mouseout',()=>{
+        submitBtn.style.backgroundColor = 'rgb(236, 236, 236)';
+    })
     
     
     formBody.appendChild(projNameI);

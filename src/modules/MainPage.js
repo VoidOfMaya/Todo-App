@@ -1,7 +1,7 @@
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Green,Lgreen,Yellow,Red,white, whiteTop } from './Color';
-
+import { Project } from './projects';
 
 //import { projectsList } from './projects';
 
@@ -151,6 +151,16 @@ function createProj(){
         submitBtn.style.backgroundColor = 'rgb(236, 236, 236)';
     })
     
+    submitBtn.addEventListener('click',(e)=>{
+        //logic function that creates a project object
+        //turns object to json
+        //stores jsonn in local storage
+        e.preventDefault();
+        const proj = new Project(projNameI.value, projInfoI.value);
+        proj.pushToStorage();
+        newProj.close();
+
+    })
     
     formBody.appendChild(projNameI);
     formBody.appendChild(projInfoI);

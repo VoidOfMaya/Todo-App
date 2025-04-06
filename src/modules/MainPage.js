@@ -1,3 +1,4 @@
+
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Green,Lgreen,Yellow,Red,white, whiteTop } from './Color';
 
@@ -41,23 +42,27 @@ function createHead(){
 
 function createProjectNav(body){
     const projectNav = document.createElement('div');
-    const navTitle = document.createElement('h2');
+    const navTitle = document.createElement('div');
     const addProject = document.createElement('div');
     const proj = createProj();
 
     addProject.style.gridArea = 'add-project'
 
     navTitle.style.display = 'inline';
-    navTitle.innerHTML = `<div id="new-project"><i class="fa-solid fa-folder fa-fade" style="color:#ffff;"></i> My Projects</div>`;
+    navTitle.style.fontSize = '28px';
+    navTitle.style.padding = '20px';
+    navTitle.id = 'new-project';
+    navTitle.innerHTML = `<i class="fa-solid fa-folder fa-fade" style="color:#ffff;"></i> My Projects`;
     navTitle.style.color = '#969696';
     navTitle.style.justifySelf = 'center';
 
     projectNav.style.background = Lgreen();
+    projectNav.style.minWidth = '200px';
     projectNav.style.transtion = 'left 1s ease-in-out';
     projectNav.style.left = '-250px';
     projectNav.style.gridArea = 'myProjects';
     projectNav.style.display = 'grid';
-    projectNav.style.gridTemplateRows = `auto`;
+    projectNav.style.gridTemplateRows = `1fr 9fr`;
 
     navTitle.addEventListener('mouseover',()=>{
         navTitle.innerHTML = '';
@@ -87,12 +92,16 @@ function createProj(){
     const newProj = document.createElement('dialog');
     const formBody = document.createElement('form');
 
+    newProj.style.minWidth = '400px';
+
     const projNameI = document.createElement(`input`);
-    projNameI.placeholder = 'Project Name'
+    projNameI.placeholder = 'Project Name';
+    projNameI.style.fontSize = '26px';
 
   
     const projInfoI = document.createElement(`input`);
     projInfoI.placeholder = 'Project discreption';
+    projInfoI.style.fontSize = '16px';
 
     const submitBtn = document.createElement('button');
     submitBtn.innerHTML = 'create Project';

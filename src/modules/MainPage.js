@@ -1,7 +1,8 @@
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Green,Lgreen,Yellow,Red,white, whiteTop } from './Color';
-import { Project } from './projects';
+import { Project, projectsList } from './projects';
+
 
 //import { projectsList } from './projects';
 
@@ -42,20 +43,46 @@ function createHead(){
 
 function createProjectNav(body){
     const projectNav = document.createElement('div');
+    projectNav.className = 'projectsArea';
+
     const navTitle = document.createElement('div');
+
     const addProject = document.createElement('div');
     const proj = createProj();
+    //projects list container element
+    const projectList = document.createElement('div');
+    //list element
+    const ul = document.createElement('ul');
+    ul.style.display = 'grid';
+    ul.style.gridTemplateColumns = '1fr';
+    ul.style.rowGap = '10px'; // spacing between list items
+    ul.style.padding = '0';
+    ul.style.margin = '0';
+    ul.style.listStyleType = 'none'
+    
+;    const listFill = function(){
+        for(let i =0; i < projectsList.length; i++){
+            const li = document.createElement('li')
+            li.innerText = `${ projectsList[i]}`;
+            
+            ul.appendChild(li);
+        }
+    }
+    console.log(projectsList);
+    listFill();
 
     addProject.style.gridArea = 'add-project'
 
     navTitle.style.display = 'inline';
+    navTitle.className = 'main-project-file'
     navTitle.style.fontSize = '28px';
     navTitle.style.padding = '20px';
     navTitle.id = 'new-project';
-    navTitle.innerHTML = `<i class="fa-solid fa-folder fa-fade" style="color:#ffff;"></i> My Projects`;
+    navTitle.innerHTML = `<i class="fa-solid fa-folder fa-fade" style="color:#ffff;"></i> Projects`;
     navTitle.style.color = '#969696';
     navTitle.style.justifySelf = 'center';
 
+    //projects side navigation
     projectNav.style.background = Lgreen();
     projectNav.style.minWidth = '200px';
     projectNav.style.transtion = 'left 1s ease-in-out';
@@ -66,22 +93,23 @@ function createProjectNav(body){
 
     navTitle.addEventListener('mouseover',()=>{
         navTitle.innerHTML = '';
-        navTitle.innerHTML = `<i class="fa-solid fa-plus fa-beat-fade" style="color:#ffff;"></i> My Projects`;}
+        navTitle.innerHTML = `<i class="fa-solid fa-plus fa-beat-fade" style="color:#ffff;"></i> Projects`;}
     )
     navTitle.addEventListener('mouseout',()=>{
         navTitle.innerHTML = '';
-        navTitle.innerHTML = `<i class="fa-solid fa-folder fa-fade" style="color:#ffff;"></i> My Projects`;}
+        navTitle.innerHTML = `<i class="fa-solid fa-folder fa-fade" style="color:#ffff;"></i> Projects`;}
     )
     navTitle.addEventListener('click', ()=>{
         body.appendChild(proj);
         proj.showModal();
     })
- 
     return {
         projectNav,
         populateSideNav(){
             navTitle.appendChild(addProject);
             projectNav.appendChild(navTitle);
+            projectList.appendChild(ul);
+            projectNav.appendChild(projectList);
 
         }
     };
@@ -97,11 +125,13 @@ function createProj(){
     const projNameI = document.createElement(`input`);
     projNameI.placeholder = 'Project Name';
     projNameI.style.fontSize = '26px';
+    projNameI.style.textAlign = 'center';
 
   
     const projInfoI = document.createElement(`input`);
     projInfoI.placeholder = 'Project discreption';
     projInfoI.style.fontSize = '16px';
+    projInfoI.style.textAlign = 'center';
 
     const submitBtn = document.createElement('button');
     submitBtn.innerHTML = 'create Project';
@@ -182,6 +212,7 @@ function createNavArea(){
 
 function createBody(){
     const body = document.createElement('div');
+    body.style.margin = '0px';
     body.style .display = 'grid';
     body.style.gridTemplate = ' 1fr 9fr 1fr/ 2fr 9fr 1fr';
     body.style.gridTemplateAreas = `"myProjects  main-content main-content"

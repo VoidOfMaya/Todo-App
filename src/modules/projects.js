@@ -1,12 +1,11 @@
 import{todoItem} from "./todoItem.js"
-
-const projectsList = [];
+const  projectsList = []
 
 class Project{
-    #id= 0;
+    //static #nextId= 0;
     #todoList = [];
     constructor(name, description){
-        this.#id = this.#generateId(this.#id );
+        this.id= 1
         this.name = name;
         this.description = description;
 
@@ -22,24 +21,25 @@ class Project{
     }
     pushToStorage(){
     
-        const jsonObj = JSON.stringify(this.name)+JSON.stringify(this.description)+JSON.stringify(this.#todoList)
-        localStorage.setItem(this.#id, jsonObj );
+        const stored = localStorage.getItem('projects');
+        const projects = stored ? JSON.parse(stored): [];
+
+        const filtered = projects.filter(p=> p.id !== this.id);
+
+        localStorage.setItem('projects', JSON.stringify(filtered));
     }
     getFromStorage(){
-        const storedObj = localStorage.getItem(this.#id)
+        const data = localStorage.getItem('projects');
+        return data ? JSON.parse(data) : [];
     }
-    removeProject(project){
-        projectsList.splice(project,1);
-    }
-    #generateId(id){
-        
-        return id+1
+    clearStorage(){
+
     }
 
 }
 
 export{
-    projectsList,
     Project,
+     projectsList,
         
 }

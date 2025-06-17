@@ -60,10 +60,10 @@ function createProjectNav(body){
     ul.style.margin = '0';
     ul.style.listStyleType = 'none'
     
-;    const listFill = function(){
+;    const listFill = function(){//<================make this populate sidenave with project names from projects list
         for(let i =0; i < projectsList.length; i++){
             const li = document.createElement('li')
-            li.innerText = `${ projectsList[i]}`;
+            li.innerText = `${ projectsList[i].name}`;
             
             ul.appendChild(li);
         }
@@ -186,8 +186,10 @@ function createProj(){
         //turns object to json
         //stores jsonn in local storage
         e.preventDefault();
-        const proj = new Project(projNameI.value, projInfoI.value);
+        const proj = new Project(projNameI.value, projInfoI.value); //<=====fix this next programming sessions, make it store properly 
+        console.log(`mainpage: ${JSON.stringify(proj)}`);
         proj.pushToStorage();
+        
         newProj.close();
 
     })

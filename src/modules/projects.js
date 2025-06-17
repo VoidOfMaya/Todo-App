@@ -25,10 +25,12 @@ class Project{
         const projects = stored ? JSON.parse(stored): [];
 
         const filtered = projects.filter(p=> p.id !== this.id);
+        filtered.push(this);
+        console.log(`projectpage: ${filtered}`);
 
         localStorage.setItem('projects', JSON.stringify(filtered));
     }
-    getFromStorage(){
+    getFromStorage(){ //<======make this functional; for retrieving from local storage  to populate the sidenav
         const data = localStorage.getItem('projects');
         return data ? JSON.parse(data) : [];
     }

@@ -1,5 +1,4 @@
 import{todoItem} from "./todoItem.js"
-const  projectsList = []
 
 class Project{
     //static #nextId= 0;
@@ -41,7 +40,5 @@ class Project{
 }
 
 export{
-    Project,
-     projectsList,
-        
+    Project,        
 }

@@ -1,10 +1,11 @@
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { Green,Lgreen,Yellow,Red,white, whiteTop } from './Color';
-import { Project, projectsList } from './projects';
+import { Project, } from './projects';
 
-
+//[[[[[[[[[[[[THIS PROJECT IS DECOMMISIONED ]]]]]]]]]]]]
 //import { projectsList } from './projects';
+const projectsList = [];
 
 //header handler
 function createLogo(){
@@ -66,10 +67,11 @@ function createProjectNav(body){
             li.innerText = `${ projectsList[i].name}`;
             
             ul.appendChild(li);
+            console.log(`this is  on the side list${projectsList}`);
         }
     }
     console.log(projectsList);
-    listFill();
+    
 
     addProject.style.gridArea = 'add-project'
 
@@ -113,6 +115,9 @@ function createProjectNav(body){
 
         }
     };
+    return{
+        listFill
+    }
    
 }
 function createProj(){
@@ -189,6 +194,7 @@ function createProj(){
         const proj = new Project(projNameI.value, projInfoI.value); //<=====fix this next programming sessions, make it store properly 
         console.log(`mainpage: ${JSON.stringify(proj)}`);
         proj.pushToStorage();
+        projectsList.push(proj.getFromStorage());
         
         newProj.close();
 
@@ -262,6 +268,7 @@ const renderDisplay = function(){
     const projectNav = createProjectNav(body);
     const navBar = createNavArea();
     projectNav.populateSideNav();
+   
 
     //main content display
     const contentWin = createContentDisplay();
